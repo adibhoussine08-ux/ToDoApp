@@ -1,0 +1,29 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "title": "Apprendre NodeJS",
+      "completed": true
+    },
+    {
+      "id": 2,
+      "title": "Créer un serveur Express",
+      "completed": true
+    },
+    {
+      "id": 3,
+      "title": "Faire le TP Todo App",
+      "completed": true
+    },
+    {
+      "id": 4,
+      "title": "entrainelent",
+      "completed": false
+    },
+    {
+      "id": 5,
+      "title": "Voir le Maroc",
+      "completed": true
+    }
+  ]
+}
