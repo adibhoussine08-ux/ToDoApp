@@ -2,15 +2,26 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <!-- Permet au site d'être bien affiché sur mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Todo App</title>
+
+  <!-- Importation des polices Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <style>
-    /* ── Reset & Variables ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+
+    /* Enlève les marges par défaut et unifie le style */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Variables de couleurs et styles réutilisables */
     :root {
       --bg:        #0f0f11;
       --surface:   #1a1a1f;
@@ -25,6 +36,7 @@
       --shadow:    0 8px 40px rgba(0,0,0,0.5);
     }
 
+    /* Style général du body */
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--bg);
@@ -36,13 +48,12 @@
       padding: 3rem 1rem 5rem;
     }
 
-    /* ── Container ── */
+    /* Conteneur principal */
     .container {
       width: 100%;
       max-width: 640px;
     }
 
-    /* ── Header ── */
     header {
       margin-bottom: 2.5rem;
     }
@@ -54,14 +65,19 @@
       margin-bottom: 0.5rem;
     }
 
+    /* Petit carré jaune avec l’emoji */
     .logo-icon {
-      width: 38px; height: 38px;
+      width: 38px;
+      height: 38px;
       background: var(--accent);
       border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 1.2rem;
     }
 
+    /* Titre principal */
     h1 {
       font-family: 'DM Serif Display', serif;
       font-size: 2.4rem;
@@ -69,7 +85,9 @@
       line-height: 1;
     }
 
-    h1 span { color: var(--accent); }
+    h1 span {
+      color: var(--accent);
+    }
 
     .subtitle {
       color: var(--muted);
@@ -77,7 +95,7 @@
       margin-top: 0.4rem;
     }
 
-    /* ── Stats ── */
+
     .stats {
       display: flex;
       gap: 1rem;
@@ -96,7 +114,6 @@
     .stat-value {
       font-family: 'DM Serif Display', serif;
       font-size: 2rem;
-      line-height: 1;
       color: var(--accent);
     }
 
@@ -108,50 +125,57 @@
       margin-top: 0.3rem;
     }
 
-    /* ── Formulaire d'ajout ── */
+
     .add-form {
       display: flex;
       gap: 0.75rem;
       margin-bottom: 1.5rem;
     }
 
+    /* Champ texte */
     .add-form input {
       flex: 1;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
       padding: 0.85rem 1.1rem;
+      font-size: 1rem;
       outline: none;
       transition: border-color 0.2s;
     }
 
-    .add-form input::placeholder { color: var(--muted); }
+    .add-form input::placeholder {
+      color: var(--muted);
+    }
 
     .add-form input:focus {
       border-color: var(--accent);
     }
 
+    /* Bouton + */
     #btn-add {
       background: var(--accent);
       color: #0f0f11;
       border: none;
       border-radius: var(--radius);
       padding: 0 1.4rem;
-      font-family: 'DM Sans', sans-serif;
       font-size: 1.3rem;
       font-weight: 700;
       cursor: pointer;
       transition: transform 0.15s, background 0.15s;
-      flex-shrink: 0;
     }
 
-    #btn-add:hover { background: #ffd460; transform: scale(1.05); }
-    #btn-add:active { transform: scale(0.97); }
+    #btn-add:hover {
+      background: #ffd460;
+      transform: scale(1.05);
+    }
 
-    /* ── Message d'erreur ── */
+    #btn-add:active {
+      transform: scale(0.97);
+    }
+
+
     #error-msg {
       background: #3b1212;
       border: 1px solid #7a2222;
@@ -161,17 +185,13 @@
       font-size: 0.9rem;
       margin-bottom: 1.2rem;
       display: none;
-      animation: slideDown 0.25s ease;
     }
 
-    #error-msg.visible { display: block; }
-
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-6px); }
-      to   { opacity: 1; transform: translateY(0); }
+    #error-msg.visible {
+      display: block;
     }
 
-    /* ── Liste des tâches ── */
+
     #todo-list {
       list-style: none;
       display: flex;
@@ -179,6 +199,7 @@
       gap: 0.6rem;
     }
 
+    /* Message quand il n'y a rien */
     .loading, .empty {
       text-align: center;
       color: var(--muted);
@@ -186,7 +207,7 @@
       font-size: 0.95rem;
     }
 
-    /* ── Tâche individuelle ── */
+
     .todo-item {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -195,17 +216,10 @@
       align-items: center;
       gap: 0.9rem;
       padding: 0.85rem 1rem;
-      transition: border-color 0.2s, background 0.2s, opacity 0.3s, transform 0.3s;
-      animation: fadeIn 0.25s ease;
+      transition: 0.2s;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .todo-item:hover { border-color: #3e3e4a; }
-
+    /* Quand la tâche est cochée */
     .todo-item.completed {
       background: var(--done);
       opacity: 0.75;
@@ -216,26 +230,20 @@
       color: var(--muted);
     }
 
-    .todo-item.removing {
-      opacity: 0;
-      transform: translateX(30px);
+    /* Checkbox custom */
+    .todo-check input {
+      display: none;
     }
-
-    /* ── Checkbox custom ── */
-    .todo-check {
-      position: relative;
-      flex-shrink: 0;
-    }
-
-    .todo-check input { display: none; }
 
     .checkmark {
-      width: 22px; height: 22px;
+      width: 22px;
+      height: 22px;
       border: 2px solid var(--border);
       border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
     }
 
     .todo-check input:checked + .checkmark {
@@ -246,31 +254,27 @@
     .todo-check input:checked + .checkmark::after {
       content: '✓';
       font-size: 0.85rem;
-      font-weight: 700;
+      font-weight: bold;
       color: #0f0f11;
     }
 
+    /* Texte de la tâche */
     .todo-title {
       flex: 1;
       font-size: 0.97rem;
-      line-height: 1.4;
-      word-break: break-word;
     }
 
-    /* ── Input d'édition inline ── */
+    /* Input d'édition */
     .edit-input {
       flex: 1;
       background: var(--surface2);
       border: 1px solid var(--accent);
       border-radius: 8px;
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.97rem;
       padding: 0.3rem 0.6rem;
-      outline: none;
     }
 
-    /* ── Boutons d'action ── */
+    /* Boutons modifier / supprimer */
     .todo-actions {
       display: flex;
       gap: 0.4rem;
@@ -278,7 +282,9 @@
       transition: opacity 0.2s;
     }
 
-    .todo-item:hover .todo-actions { opacity: 1; }
+    .todo-item:hover .todo-actions {
+      opacity: 1;
+    }
 
     .btn-edit, .btn-delete {
       background: var(--surface2);
@@ -286,52 +292,60 @@
       border-radius: 8px;
       color: var(--text);
       cursor: pointer;
-      font-size: 0.85rem;
       padding: 0.3rem 0.5rem;
-      transition: background 0.15s, transform 0.1s;
+      font-size: 0.85rem;
     }
 
-    .btn-edit:hover  { background: #2e2e3a; transform: scale(1.1); }
-    .btn-delete:hover { background: #3b1212; border-color: #7a2222; transform: scale(1.1); }
+    .btn-edit:hover {
+      background: #2e2e3a;
+    }
 
-    /* ── Responsive ── */
+    .btn-delete:hover {
+      background: #3b1212;
+      border-color: #7a2222;
+    }
+
+    /* Responsive mobile */
     @media (max-width: 480px) {
       h1 { font-size: 1.8rem; }
-      .stats { gap: 0.6rem; }
       .todo-actions { opacity: 1; }
     }
   </style>
 </head>
+
 <body>
 
   <div class="container">
 
-    <!-- Header -->
+    <!-- En-tête du site -->
     <header>
       <div class="logo">
         <div class="logo-icon">📋</div>
       </div>
+
       <h1>Todo <span>App</span></h1>
       <p class="subtitle">Organisez vos tâches simplement.</p>
     </header>
 
-    <!-- Stats -->
+    <!-- Cartes de statistiques -->
     <div class="stats">
       <div class="stat-card">
         <div class="stat-value" id="stats-total">0</div>
         <div class="stat-label">Total</div>
       </div>
+
       <div class="stat-card">
         <div class="stat-value" id="stats-done">0</div>
         <div class="stat-label">Terminées</div>
       </div>
+
       <div class="stat-card">
         <div class="stat-value" id="stats-left">0</div>
         <div class="stat-label">Restantes</div>
       </div>
     </div>
 
-    <!-- Formulaire d'ajout -->
+    <!-- Formulaire pour ajouter une tâche -->
     <div class="add-form">
       <input
         type="text"
@@ -350,6 +364,7 @@
 
   </div>
 
+  <!-- Fichier JavaScript externe -->
   <script src="script.js"></script>
 </body>
 </html>

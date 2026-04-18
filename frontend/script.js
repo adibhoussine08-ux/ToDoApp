@@ -206,9 +206,6 @@ function openEditMode(li, todo) {
   });
 }
 
-// ──────────────────────────────────────────────
-// DELETE — Supprimer une tâche
-// ──────────────────────────────────────────────
 function deleteTodo(id, li) {
   // Animation de sortie
   li.classList.add('removing');
@@ -228,16 +225,9 @@ function deleteTodo(id, li) {
   }, 300);
 }
 
-// ──────────────────────────────────────────────
-// Événements
-// ──────────────────────────────────────────────
 btnAdd.addEventListener('click', createTodo);
 
 inputTitle.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') createTodo();
 });
-
-// ──────────────────────────────────────────────
-// Initialisation
-// ──────────────────────────────────────────────
 getAllTodos();

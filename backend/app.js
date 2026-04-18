@@ -29,10 +29,8 @@ app.get('/', (req, res) => {
 app.use((req, res) => {
   res.status(404).json({ message: 'Route introuvable' });
 });
-
-// ──────────────────────────────────────────────
 // Démarrage du serveur
-// ──────────────────────────────────────────────
+
 app.listen(port, () => {
   console.log(`Serveur démarré sur http://localhost:8080`);
 });
