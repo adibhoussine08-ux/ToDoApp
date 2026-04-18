@@ -8,9 +8,6 @@ const path = require('path');
 const dataPath = path.join(__dirname, '../data.json');
 
 
-// -----------------------------
-// FONCTIONS UTILITAIRES
-// -----------------------------
 
 // Fonction pour lire les données dans data.json
 const readData = () => {

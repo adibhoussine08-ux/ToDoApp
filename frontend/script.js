@@ -1,8 +1,6 @@
 const API_URL = 'http://localhost:3000';
 
-// ──────────────────────────────────────────────
-// Sélection des éléments DOM
-// ──────────────────────────────────────────────
+
 const todoList      = document.getElementById('todo-list');
 const inputTitle    = document.getElementById('input-title');
 const btnAdd        = document.getElementById('btn-add');
@@ -11,18 +9,12 @@ const statsTotal    = document.getElementById('stats-total');
 const statsDone     = document.getElementById('stats-done');
 const statsLeft     = document.getElementById('stats-left');
 
-// ──────────────────────────────────────────────
-// Affichage des erreurs / succès
-// ──────────────────────────────────────────────
 function showError(msg) {
   errorMsg.textContent = msg;
   errorMsg.classList.add('visible');
   setTimeout(() => errorMsg.classList.remove('visible'), 3500);
 }
 
-// ──────────────────────────────────────────────
-// Mise à jour des statistiques
-// ──────────────────────────────────────────────
 function updateStats(todos) {
   const total = todos.length;
   const done  = todos.filter(t => t.completed).length;
@@ -30,10 +22,6 @@ function updateStats(todos) {
   statsDone.textContent  = done;
   statsLeft.textContent  = total - done;
 }
-
-// ──────────────────────────────────────────────
-// Rendu d'une tâche dans le DOM
-// ──────────────────────────────────────────────
 function renderTodo(todo) {
   const li = document.createElement('li');
   li.className = `todo-item${todo.completed ? ' completed' : ''}`;
@@ -78,9 +66,6 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
-// ──────────────────────────────────────────────
-// GET — Charger toutes les tâches
-// ──────────────────────────────────────────────
 function getAllTodos() {
   todoList.innerHTML = '<li class="loading">Chargement...</li>';
 
@@ -105,9 +90,6 @@ function getAllTodos() {
     });
 }
 
-// ──────────────────────────────────────────────
-// POST — Créer une tâche
-// ──────────────────────────────────────────────
 function createTodo() {
   const title = inputTitle.value.trim();
 
@@ -136,9 +118,6 @@ function createTodo() {
     });
 }
 
-// ──────────────────────────────────────────────
-// PUT — Basculer l'état completed d'une tâche
-// ──────────────────────────────────────────────
 function toggleTodo(id, completed) {
   fetch(`${API_URL}/todos/${id}`, {
     method: 'PUT',
@@ -156,9 +135,6 @@ function toggleTodo(id, completed) {
     });
 }
 
-// ──────────────────────────────────────────────
-// PUT — Mode édition inline d'une tâche
-// ──────────────────────────────────────────────
 function openEditMode(li, todo) {
   const titleSpan = li.querySelector('.todo-title');
   const oldTitle  = todo.title;

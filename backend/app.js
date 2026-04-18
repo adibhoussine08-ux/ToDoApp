@@ -4,9 +4,6 @@ const cors = require('cors');
 const app = express();
 const port = 3000;
 
-// ──────────────────────────────────────────────
-// Middlewares
-// ──────────────────────────────────────────────
 
 // Autoriser les requêtes cross-origin (depuis le frontend)
 app.use(cors({ origin: '*' }));
@@ -14,9 +11,6 @@ app.use(cors({ origin: '*' }));
 // Parser le body des requêtes en JSON
 app.use(express.json());
 
-// ──────────────────────────────────────────────
-// Routes
-// ──────────────────────────────────────────────
 const todosRoutes = require('./router/todos');
 app.use(todosRoutes);
 
@@ -32,5 +26,5 @@ app.use((req, res) => {
 // Démarrage du serveur
 
 app.listen(port, () => {
-  console.log(`Serveur démarré sur http://localhost:8080`);
+  console.log(`✅ Serveur démarré sur http://localhost:${port}`);
 });
